@@ -19,6 +19,7 @@ Je n'ai encore pas plus compris à part afficher une alerte concernant la notifi
 
 ### Et après
 Bah je vais aller me coucher après avoir pris une boîte complète d'Ibuprofène et avoir vidé une bouteille entière de J&D ...
+![](https://github.com/Keitaroblaster/Angular/blob/main/elwjcajd.jpg?raw=true)
 
 ## Ajout de la navigation
 ### Associer un chemin URL à un composant
