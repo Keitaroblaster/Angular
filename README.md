@@ -33,7 +33,8 @@ De ce que je comprends ici c'est qu'on va modifier l'ancrage dans le fichier pro
 5. Dans le fichier "Product-details.Component.html" on va définir le modèle d'affichage des éléments correpondant au produit afin que lorsque les utilisateurs cliquent sur un nom dans la liste de produits, le routeur les dirige vers l'URL distincte du produit, affiche le ProductDetailsComponent et affiche les détails du produit.
 
 ### Et après
-Bah je vais aller me coucher une 2ème fois après avoir pris une nouvelle boîte complète d'Ibuprofène et avoir vidé une 2ème bouteille entière de J&D ...
+Bah là ça y'est ....
+![](https://raw.githubusercontent.com/Keitaroblaster/Angular/main/why.webp)
 
 ## Gestion des données
 ### Créer le service de panier d'achat
