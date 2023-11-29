@@ -91,7 +91,8 @@ On va créer maintenant un moyen pour permettre à l'utilisateur d'ajouter des p
 2. On importe 'Products' depuis le fichier product.ts et dans la classe CartService, on va déclarer une propriété 'items' de type 'Product' sous forme de tableau qui permettra de stocker les produits sélectionnés dans le panier.
 
 3. Dans la classe  CartService on va définir 3 méthodes qui vont permettre :
-       - d'ajouter un produit dans le tableau de 'items' via la                méthode 'addTo'.
+   
+       - d'ajouter un produit dans le tableau de 'items' via la méthode 'addTo'.
 
        - de retourner le ou les articles avec sa quantité via un 'get'
 
@@ -112,13 +113,40 @@ On va voir maintenant comment ajouter un produit au panier.
 ### Créer la vue du panier
 #### Configurer le composant panier
 
-1. Création d'un nouveau composant via le terminal en tapant la commmande ng generate component cart.
+1. Création d'un nouveau composant via le terminal en tapant la commande ng generate component cart.
 
-2. on rajoute dans le fichier 'app.module.ts' l'itinéraire pour accéder au panier
+2. on rajoute dans le fichier 'app.module.ts' l'itinéraire { path: "cart", component: CartComponent} pour accéder au panier. 
 
-3. Dans le fichier 'top-bar.component.html' on met à jour l'ancre en ajouter le lien de routage vers le composant 'cart'
+3. Dans le fichier 'top-bar.component.html' on met à jour l'ancre en ajoutant le lien de routage 'routerLink="/cart"' vers le composant 'cart'.
 
 #### Afficher les articles du panier
+
+1. On importe le fichier 'CartService' depuis le fichier 'cart.service.ts' dans le fichier 'cart.component.ts'.
+
+2. Dans le fichier 'cart.component.ts' on ajoute au constructeur de la classe 'CartComponent' la propriété 'cartService' de type 'CartService'.
+
+3. Puis on définit la propriété 'items' qui va permettre d'enregistrer le produit sélectionner dans le panier via l'accesseur 'Items'par la méthode 'this.cartService.getItems()'.
+
+4. Dans le fichier 'cart.component.html' on va boucler sur les produits qui quand il correspondra au produit sélectionné affichera le nom de l'item via la syntaxe {{item.name}} ainsi que le prix du produit via la syntaxe {{item.price | currency}}.
+
+### Récupérer les prix d'expédition
+#### Configurer AppModule pour utiliser HttpClient
+
+1. Importation de 'HttpClientModule' dans le fichier 'app.module.ts' et rajouter 'HttpClientModule' dans les imports de '@NgModule' pour pouvoir utiliser le service 'HttpClient'.
+
+#### Configurer CartService pour utiliser HttpClient
+
+1. Importation de 'HttpClient' dans le fichier 'cart.service.ts' afin de pouvoir récupérer des données et intéragir avec des API et des ressources externes puis ajouter au constructeur de la classe 'CartService' la propriété 'http' de type 'HttpClient'.
+
+#### Configurer CartService pour obtenir les prix d'expédition
+
+1. Après la configuration pour pouvoir utiliser 'HttpClient' et permettre la récupération des données, il faut pouvoir récupérer les données d'expédition à partir d'un fichier 'shipping.json'. On va définir une méthode 'getShippingPrices()' dans la classe 'CartService' du fichier 'cart.service.ts' qui utilisera la méthode 'get()' de 'HttpClient' :
+
+'return this.http.get<{type: String, price: number}[]>('/assets/shipping.json');'
+
+### Créer un composant d'expédition
+
+1. 
 
 
 
