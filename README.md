@@ -2,7 +2,7 @@
 ## Débuter avec Angular
 ### Créer la liste de produits
 
-2. Dans notre fichier "product-list.component.html" on créé un titre 'Products' et une balise <div> qui va utiliser la directive '*ngFor' qui est une directive **structurelle** et qui va parcourir chaque élément du tableau 'products' pour stocker dans la variable 'product' la valeur actuelle du tableau à chaque itération.
+2. Dans notre fichier "product-list.component.html" on créé un titre 'Products' et une balise 'div' qui va utiliser la directive '*ngFor' qui est une directive **structurelle** et qui va parcourir chaque élément du tableau 'products' pour stocker dans la variable 'product' la valeur actuelle du tableau à chaque itération.
   
 3. On afficher la valeur 'name' de chaque objet 'product' du tableau 'products'avec {{ product.name }} qui est une **interpolation** .
   
