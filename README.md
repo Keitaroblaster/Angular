@@ -30,16 +30,16 @@
 
 ### Transmettre des données à un composant parent
 
-1. Dans le fichier 'product-alerts.component.ts', on va importer une propriété de sortie de donnée avec 'Output' et une propriété d'émission d'événement avec 'EventEmitter' depuis @angular/core.
+1. Dans le fichier 'product-alerts.component.ts' on importe en plus des décorateur, 'Component' et 'Input' et de la classe 'Product', le décorateur 'Output' qui va permettre de déclarer une propriété de sortie dans le composant et la classe 'EventEmitter' qui va permettre de créer un objet émettant des événements personnalisés.
 
-2. On implémente ensuite dans la class ProductAlertsComponent une propriété 'notify' avec un décorateur @Output et une nouvelle instance de 'EventEmitter' ce qui permettra d'émettre un évènement quand la valeur de la propriété 'notify' change.
+2. Dans la classe 'ProductAlertsComponent' on configure le composant avec une propriété d'entrée 'product' qui peut être fournie par le composant parent et une propriété de sortie 'notify' qui va permettre au composant enfant d'émettre un évènement quand quelque chose doit être notifié.
 
-3. Ensuite, dans le fichier 'product-alerts.component.html' on va rajouter à la balise bouton l'élément '(click)' qui va appeler la function onNotify() quand on clique sur le bouton.
+3. Mise à jour du bouton 'Notify Me' dans le fichier 'product-alerts.component.html' en ajoutant l'évènement '(click)' qui réagira au clic de la souris sur le bouton et appellera la fonction 'emit()' dela propriété 'notify'.
 
-4. On définit la fonctionnalité de la function onNotify() dans le fichier 'product-list.component.ts' qui sera d'afficher, au click du bouton, une fenêtre qui va afficher l'information.
+4. Ajout dans la classe 'ProductListComponent' du fichier 'product-list.component.ts' de la méthode 'onNotify()' qui lorsqu'elle sera appelé, ouvrira une boîte de dialogue pour afficher le message que l'utilisateur sera notifié quand le produit sera en vente.
 
-5. On va ensuite mettre à jour le fichier 'product-list.component.html' en créant une liaison d'événement '(notify)' (les parenthèses indique qu'on déclare un écouteur de l'événement 'notify') qui va appeler la function onNotify() à l'intérieur de la balise <app-product-alerts>.
-   
+5. Par la même occasion dans le fichier 'product-list.component.ts', on ajoute une liaison d'évènement qui écoute l'évènement 'notify' émis par le composant 'app-product-alerts' et appelle la méthode 'onNotify()' du composant parent en réponse à cet évènement.
+  
 ### Et après
 
 Bah je vais aller me coucher après avoir pris une boîte complète d'Ibuprofène et avoir vidé une bouteille entière de J&D ...
