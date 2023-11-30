@@ -2,38 +2,33 @@
 ## Débuter avec Angular
 ### Créer la liste de produits
 
-1. Avec la syntaxe <div *ngFor="let product of products"></div> on fait une boucle "for" qui va lister la variable products implémentée dans le fichier "products.ts" sous forme de tableau pour l'exporter dans notre fichier "product-list.component.html".
+2. Dans notre fichier "product-list.component.html" on créé un titre 'Products' et une balise <div> qui va utiliser la directive '*ngFor' qui est une directive **structurelle** et qui va parcourir chaque élément du tableau 'products' pour stocker dans la variable 'product' la valeur actuelle du tableau à chaque itération.
   
-2. On va ensuite l'afficher sur notre interface sous forme de texte via la syntaxe {{ product.name }}. Dans le fichier "products.ts" on créé une classe Product avec des attributs et un constructeur qui lors de l'instanciation permettra d'appeler le paramètre souhaité. Notamment ici avec "product.name" on va pouvoir appeler la valeur donnée à "name" lors de l'instanciation de l'objet, "name" correspond au nom du produit.
+3. On afficher la valeur 'name' de chaque objet 'product' du tableau 'products'avec {{ product.name }} qui est une **interpolation** .
   
-3. Dans la Div, en ajoutant la balise <a [title]="product.name + ' details'">, cela permet d'afficher un texte en survol contenant des infos notamment ici ("nom du produit" détails) quand on passe le curseur sur le produit. 
+5. On affiche au survole sur le produit des infos notamment ici le nom du produit et la chaîne de caractère 'details' grâce à la **liaison de propriété** '[title]'.
 
-4. On ajoute ensuite une balise paragraphe dans laquelle on rajoute la syntaxe <p *ngIf="product.description">Description: {{ product.description }}</p> dans laquelle on va mettre une condition "If" pour dire que si dans l'instance de l'object il y a un paramètre "description", on va l'afficher sur l'interface grâce à la syntaxe {{product.description}} et afficher ainsi la description de chaque produit de la liste.
+6. On utilise une directive '*ngIf' qui définie que si 'product.description' existe alors on récupère via l'interpolation, la valeur de la propriété 'description' de l'objet 'product' pour afficher la description du produit.
 
-5. On ajoute un bouton "share" qui comme la balise est dans la Div  "ngFor", boucle sur chaque produit et s'affiche ainsi en dessous de chaque produits. (click) va appeler la fonction share() qui se trouve dans le fichier 'product-lit.component.ts' et qui lorsqu'on clique sur le bouton, ouvrira une fenêtre d'alert dans laquelle sera affiché "Vous avez partagé ce produit !"
+7. On ajoute un bouton et un évènement 'click' qui réagira au clic de la souris sur le bouton et appellera la fonction 'share()' qui doit ouvrir une fenêtre et afficher un message.
 
 ### Transmettre des données à un composant enfant
 
-On crée une nouvelle fonctionnalité d'alerte qui va vérifier qu'elle correspond bien à la condition qu'on va lui donner et si c'est le cas, va afficher un bouton qui permettra à l'utilisateur de cliquer dessus et ce qui lui permettra de visualiser la mise en vente du produit. Cette fonctionnalité est créée dans le composant 'ProductAlert' (composant enfant) et héritera du composant 'ProductListComponent' (composant parent).
-
-1. On va créer un nouveau composant via le terminal en tapant la commmande ng generate component product-alerts.
+2. On va créer un nouveau composant via le terminal en tapant la commmande ng generate component product-alerts.
  
-2. Dans le fichier 'product-alerts.component.ts', on y retrouve le décorateur qui va nous permettre de définir le composant et dans lequel on y retrouve le sélecteur qui va spécifier comment on peut utiliser le composant dans les templatesHTML ici dans ce cas en utilisant la balise <app-product-alerts></app-product-alerts>.
+3. Dans le fichier 'product-alerts.component.ts', on y retrouve le décorateur **@Component** qui est une **annotation** et qui définit les métadonnées d'un composant. Dans ce décorateur on y trouve le 'selector' qui identifie le composant qui sera utilisé dans le HTML via la balise '<app-product-alerts>'. On y trouve aussi le 'TemplateUrl' qui indique le chemin du fichier HTML et le 'StyleUrls' qui indique une liste de fichiers CSS contenant les styles pour le composant.
   
-3. Ensuite il faut configurer la réception des données produit en important 'Input' depuis @angular/core.
+4. Importation des décorateurs 'Component' et 'Input' depuis le module @angular/core ce qui va permettre de définir et configurer des composants Angular et de la classe 'Product'.
    
-4. On implémente ensuite dans la class ProductAlertsComponent une propriété 'product' qui sera de type 'Product' ou 'undefined' et qui hérite du parent du composant par le biais du décorateur '@Input()'.
+5. On définit une propriété d'entrée 'product' de type 'Product' ou 'undefined' via le décorateur **@Input()** qui permet de passer les données contenues dans 'Product'. Cette propriété d'entrée sera fournie par le composant parent lors de l'utilisation de '<app-product-alerts>'.
    
-5. On va ensuite dans le fichier 'product-alerts.component.html' qui va nous permettre de créer le bouton qui permettra de mettre la condition d'affichage du bouton qui permettra à l'utilisateur d'être notifié en utilisant une condition 'If' pour dire que si le produit et son prix son supérieur à 700 patates alors on affiche ce bouton d'alerte pour ce produit.*
+6. On utilise une directive '*ngIf' qui va vérifier si la propriété 'product' existe et si la propriété 'price' de l'objet 'product' est supérieur à 700 qui dans ce cas si c'est true affichera un bouton 'Notify Me'.
    
-6. Le générateur a automatiquement importé le 'ProductAlertsComponent' dans l'app.module.ts afin qu'il soit accessible par les autres composants du projet.
+7. Ajout automatique de la classe 'ProductAlertsComponent' dans le fichier 'app.module.ts' où on y trouve le décorateur **@NgModule** utilisé pour configurer un module en spécifiant les composants, directives qui appartiennent à ce module sous forme de tableau nommé 'declarations'.
    
-7. Il faut ensuite ajouter la balise <app-product-alerts></app-product-alerts> dans le fichier 'product-list.component.html' du composant 'productListComponent' afin de lui dire que 'ProductAlertsComponent' est un enfant de 'ProductListComponent'.
-   
-8. Dans le fichier 'product-list.component.html' on va implémenter la balise <app-product-alerts> pour inclure le composant enfant 'ProductAlertsComponent' dans le template du composant parent 'ProductListComponent' qui a une propriété 'product' et va transmettre sa valeur au composant enfant à l'aide de l'attribut [product].
+8. Dans la balise '<app-product-alerts>' on ajoute une liaison de propriété qui passe la valeur de la propriété 'product' du composant parent au composant 'app-product-alerts', ce qui permet de transmettre des données du composant parent au composant enfant et d'intéragir avec le composant 'app-product-alerts' en fonction de la valeur de 'product'.
 
 ### Transmettre des données à un composant parent
-Maintenant qu'on a définie la fonctionnalité du bouton d'alerte et qu'il est affiché il faut que ce bouton fonctionne afin que le composant enfant notifie et transmette les donnes au composant parent.
 
 1. Dans le fichier 'product-alerts.component.ts', on va importer une propriété de sortie de donnée avec 'Output' et une propriété d'émission d'événement avec 'EventEmitter' depuis @angular/core.
 
@@ -146,17 +141,33 @@ On va voir maintenant comment ajouter un produit au panier.
 
 ### Créer un composant d'expédition
 
-1. 
+1. Création d'un composant via le terminal 'shipping' qui va nous permettre d'afficher les données d'expédition.
 
+2. Dans le fichier 'app.module.ts' on ajoute le chemin pour l'expédition dans @NgModule -> RouteurModule.forRoot -> {path: "shipping", component:ShippingComponent},
 
+#### Configuration du ShippinComponent pour utiliser CartService
 
-     
+1. Afin de récupérer les données d'expédition depuis le fichier 'shipping.json' via le Http, on importe 'CartService' dans le fichier 'shipping.component.ts'.
 
+2. Dans la classe 'ShippingComponent', on crée le constructeur prenant en paramètre la propriété 'cartService' de type 'CarteService'.
 
+3. Puis on déclare la propriété 'shippingCosts', qui ne sera pas intialisée dans le constructeur, de type 'Observable' sous forme de tableau d'objets avec les propriétés 'type' de type String et 'price' de type number. Ensuite on crée une méthode 'ngOnInit' qui sera appelé quand le composant sera initialisé et permettra de récupérer les coûts d'expédition via la méthode 'getShippingPrices()' et assigner la valeur à 'ShippingCosts'.
 
+4. Dans le fichier 'shipping.component.html' on configure le modèle d'affichage des expéditions et leur prix avec une boucle pour les expéditions en mode async ce qui permet de renvoyer la dernière valeure de façon automatique jusqu'à ce le composant s'arrête.
 
+5. Dans le fichier 'cart.component.html' on rajoute le chemin qui va afficher les prix d'expédition.
 
+## Utilisation de formulaires pour la saisie utilisateur
+### Définir le modèle de formulaire de paiement
 
+1. Dans le fichier 'cart.component.ts' on importe 'FormBuilder' pour faciliter la création d'abstractControl qui est la classe de base les formulaires de contrôle, de groupe et de tableau puis on l'initialise dans le constructeur.
 
+2. On fait une méthode group() du FormBuilder pour récupérer des données.
 
+3. On appelle la méthode 'clearCart()' de 'cartService' pour effacer le contenu du panier et assigner les éléments du panier à la propriété 'items' puis afficher une fenêtre de confirmation et la valeur du formulaire dans la console du navigateur pour ensuite réinitialiser le formulaire pour une nouvelle entrée.
 
+### Créer le formulaire de paiement
+
+1. Dans le fichier 'cart.component.html' on crée un élément HTML 'form' et y ajouter un attribut '[formGroup]' pour lier le formulaire à un objet 'FormGroup' via l'instance 'checkoutForm' puis on ajout un bouton pour soumettre le formulaire via la liaison d'évènement 'ngSubmit' qui appellera la méthode 'onSubmit()'.
+
+2. On ajoute ensuite des balises 'input' afin de saisir les valeurs correspondants aux champs et les lier au 'checkoutForm'.
