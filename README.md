@@ -14,7 +14,7 @@
 
 ### Transmettre des données à un composant enfant
 
-2. On va créer un nouveau composant via le terminal en tapant la commmande ng generate component product-alerts.
+2. On créé un nouveau composant via le terminal en tapant la commmande 'ng generate component product-alerts'.
  
 3. Dans le fichier 'product-alerts.component.ts', on y retrouve le décorateur **@Component** qui est une **annotation** et qui définit les métadonnées d'un composant. Dans ce décorateur on y trouve le 'selector' qui identifie le composant qui sera utilisé dans le HTML via la balise '<app-product-alerts>'. On y trouve aussi le 'TemplateUrl' qui indique le chemin du fichier HTML et le 'StyleUrls' qui indique une liste de fichiers CSS contenant les styles pour le composant.
   
@@ -49,13 +49,11 @@ Bah je vais aller me coucher après avoir pris une boîte complète d'Ibuprofèn
 ## Ajout de la navigation
 ### Associer un chemin URL à un composant
 
-On va voir comment faire pour afficher les détails d'un produit individuel c'est à dire avoir comme une page dédiée avec un panel d'information sur le produi quand on clique sur ce produit parmi la liste de produits.
+1. On crée un nouveau composant via le terminal en tapant la commmande 'ng generate component product-details'.
 
-1. On va créer un nouveau composant via le terminal en tapant la commmande ng generate component product-details.
+2. Dans le décorateur '**@NgModule**' du fichier 'app.module.ts' on va ajouter dans le module 'RouterModule' qui fournit des fonctionnalités de routage pour la navigation, la route qui est associée aux pages de détails de produit où '**:productId**' est un paramètre dynamique qui peut être passé dans l'URL. Le composant 'ProductDetailsComponent' est ainsi chargé quand le chemin est atteint.
 
-2. Dans le fichier 'app.module.ts' on va créer le chemin pour accéder aux détails du produit avec un 'path: "products/:productId", component: ProductDetailsComponent' et qui permet ainsi de faire correspondre une URL spécifique à un composant de 'ProductDetailsComponent' et qui sera responsable de l'affichage des détails du produit correspondant au 'productId' fourni dans l'URL.
-
-3. On va ensuite dans le fichier 'product-list.component.html' dans lequel on va modifier l'ancre pour y rajouter un 'routerLink' qui est un lien qui va permettre de lancer la navigation vers un itinéraire en prenant comme paramètre le 'productId' c'est à dire qu'il va aller dans le fichier 'product.ts' dans lequel se trouve le tableau des produits et il va recherche via l'Id de chaque produit celui qui correspond au productId de l'URL.
+3. Dans le fichier 'product-list.component.html' on met à jour l'ancre en ajoutant la directive '[routerLink]'pour créer un lien de navigation en pointant vers le chemin '**'/products'**' avec l'Id spécifique du produit '**product.id**'.
 
 ### Afficher les détails du produit
 
