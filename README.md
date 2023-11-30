@@ -57,15 +57,15 @@ Bah je vais aller me coucher après avoir pris une boîte complète d'Ibuprofèn
 
 ### Afficher les détails du produit
 
-1. On importe l'accès aux infos, puis l'initialisation ainsi que le tableaux des produits.
+1. On met à jour le fichier 'product-details.component.ts' en important le décorateur 'OnInit' que le composant implémente l'interface 'OnInit' et la classe 'ActivatedRoute' afin d'accéder aux informations associées à la route active.
 
-2. Ensuite dans la classe ProductDetailComponent on implément l'initialisation et les produits.
+2. On définit la classe 'ProductDetailsComponent' qui a une propriété 'product' de type 'Product' ou 'undefined' et qui va implémenter l'interface 'OnInit' qui appellera la méthode 'ngOnInit' lors de l'initialisation du composant.
 
-3. On active en injectant l'accès aux infos.
+3. On y ajoute dans la classe 'ProductDetailsComponent' le constructeur qui prend en paramètre une instance de la classe 'ActivatedRoute' et l'assigne à la propriété privée 'route' ce qui permettra à la classe d'accéder aux informations 'ActivatedRoute'.
 
-4. On va faire appel à une fonction pour qu'elle recherche l'Id du produit dans le tableau afin de l'extraire.
+4. Dans le fichier product-details.component.ts, on créé la méthode 'ngOnInit qui sera appelée lors de l'initialisation du composant. Cette méthode va utiliser dans un 1er temps les informations de 'route' via la constante 'routeParams' avec 'snapshot' qui est la propriété d'ActivatedRoute et représente une capture instantanée des informations de route au moment de la navigation et 'paramMap' qui contient les paramètres de la route sous forme de map, pour extraire l'Id du produit à partir de l'URL via la constante 'productIdFromRoute' avec 'routeParams.get('productId')' qui va permettre de récupérer la valeur du paramètre 'productId' de l'URL en tant que chaîne de caractères pour ensuite être convertit en un nombre entier par la méthode number(). Puis une fois l'Id extraite la méthode va permettre de rechercher le produit correspondant dans une liste de produits et l'assigne à la propriété 'product' de la classe.
 
-5. Dans le fichier 'Product-details.Component.html' on va définir le modèle d'affichage des éléments correpondant au produit afin que lorsque les utilisateurs cliquent sur un nom dans la liste de produits, le routeur les dirige vers l'URL distinct du produit, affiche le ProductDetailsComponent et affiche les détails du produit.
+5. On finit en mettant à jour le fichier 'product-details.component.html' afin d'afficher les détails d'un produit uniquement si la propriété 'product' existe et affichera le nom, le prix et la description du produit.
 
 ### Et après
 
