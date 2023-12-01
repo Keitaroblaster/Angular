@@ -69,7 +69,7 @@ Bah je vais aller me coucher après avoir pris une boîte complète d'Ibuprofèn
 
 ### Et après
 
-Bah là ça y'est ....
+Bah ....
 
 ![](https://raw.githubusercontent.com/Keitaroblaster/Angular/main/why.webp)
 
