@@ -77,69 +77,59 @@ Bah ....
 ### Créer le service de panier d'achat
 #### Définir un service de panier
 
-On va créer maintenant un moyen pour permettre à l'utilisateur d'ajouter des produits dans un panier via un bouton qui sera configuré de manière à stocker des informations sur les produits dans la panier.
+1. On va créer un nouveau composant via le terminal en tapant la commmande 'ng generate service cart'.
 
-1. On va créer un nouveau composant via le terminal en tapant la commmande ng generate service cart.
+2. Dans le fichier 'cart.service.ts' on importe la classe 'Product'. Le décorateur '**@Injectable**' est utilisé pour indiquer qu'une classe peut être injectée avec des dépendances et 'providedIn:'root'' indique qu'une seule instance de ce service sera partagée par toute l'application. Puis déclaration dans la classe 'CartService' de la propriété 'items' qui sera un tableau de produits initialisé vide.
 
-2. On importe 'Products' depuis le fichier product.ts et dans la classe CartService, on va déclarer une propriété 'items' de type 'Product' sous forme de tableau qui permettra de stocker les produits sélectionnés dans le panier.
-
-3. Dans la classe  CartService on va définir 3 méthodes qui vont permettre :
+3. Dans la classe 'CartService' on définit des méthodes pour la gestion du panier :
    
-       - d'ajouter un produit dans le tableau de 'items' via la méthode 'addTo'.
-
-       - de retourner le ou les articles avec sa quantité via un 'get'
-
-       - d'effacer le panier via la méthode 'clear'
+     - Dans un 1er temps on définit une méthode 'addToCart(product: Product)' qui prend en paramètre un 'product' de type 'Product' et va ajouter un produit au panier grâce à 'this.items.push(product)' qui va permettre d'ajouter le produit à la fin du tableau 'items' du panier.
+  
+     - Dans un 2eme temps on définit une méthode 'getItems()' qui va retourner les produits présents dans le panier.
+  
+     - Puis dans un dernier temps on définit une méthode 'clearCart()' qui va permettre de vider le panier en réinitialisant le tableau grâce au 'this.items = []' qui attribue un tableau vide à la propriété 'items' et le retourne avec 'return this.items'.
 
 #### Utiliser le service de panier
 
-On va voir maintenant comment ajouter un produit au panier.
+1. Importation de la classe 'CartService' dans le fichier 'product-details.component.ts' pour accéder à la fonctionnalité fournie par le service pour ajouter des produits au panier. Puis on initialise la propriété 'cartService' de type de la classe 'CartService dans le constructeur de la classe 'ProductDetailsComponent'.
 
-1. Dans le fichier 'product-details.component.ts', on importe 'CartService' depuis 'cart.service'.
+3. Ajout dans la classe 'ProductDetailsComponent' de la méthode 'addToCart(product: Product)' qui va faire appelle au service 'cartService' qui va appeler la méthode 'addToCart' avec le produit en argument ce qui ajoutera le produit au panier puis afficher une alerte pour informer l'utilisateur que son produit est bien dans le panier.
 
-2. Puis dans le constructeur de la classe ProductDetailsComponent, on va rajouter la propriété cartService de type 'CartService' en mode privé qui sera accessible via la méthode 'get' implémentée dans le fichier 'cart.service.ts'
-
-3. Puis dans la classe ProductDetailsComponent, on va créer la méthode 'addToCart' qui va récupérer le produit depuis le fichier 'cart.service.ts' (this.cartservice) dans laquelle se trouve la méthode 'addToCart' qui pousse le produit afin d'ensuite l'ajouter au panier (.addToCart(product)).
-
-4. Dans le fichier 'product-details.component.html', on va ajouter le bouton pour acheter le produit qui va en fait ajouter le produit au panier lors du click. on va donc rajouter une balise button de type button et on va ajouter l'élément d'événement click qui appellera la méthode d'ajout du produit dans le panier implémenté dans le fichier 'product-details.component.ts'.
+4. Dans le fichier 'product-details.component.html' on met en place un bouton d'évènement 'Buy' qui lorsque l'utilisateur cliquera sur ce bouton, cela fera appel à la méthode 'addToCart(product)' qui ajoutera le produit au panier.
 
 ### Créer la vue du panier
 #### Configurer le composant panier
 
-1. Création d'un nouveau composant via le terminal en tapant la commande ng generate component cart.
+1. On va créer un nouveau composant via le terminal en tapant la commmande 'ng generate component cart'.
 
-2. on rajoute dans le fichier 'app.module.ts' l'itinéraire { path: "cart", component: CartComponent} pour accéder au panier. 
+3. Dans le fichier 'app.module.ts', on définit le chemin vers l'URL '/cart' qui quand il sera atteint, le composant 'CartComponent' sera chargé et affiché.
 
-3. Dans le fichier 'top-bar.component.html' on met à jour l'ancre en ajoutant le lien de routage 'routerLink="/cart"' vers le composant 'cart'.
+4. Mise à jour du bouton 'payer' dans le fichier 'top-bar.component.html' avec une directive 'routerLink' qui point vers l'URL '/cart'.
 
 #### Afficher les articles du panier
 
-1. On importe le fichier 'CartService' depuis le fichier 'cart.service.ts' dans le fichier 'cart.component.ts'.
+1. Importation de la classe 'CartService' dans le fichier 'cart.component.ts' puis on ajoute au constructeur de la classe 'CartComponent' la propriété 'cartService' de type de la classe 'CartService'.
 
-2. Dans le fichier 'cart.component.ts' on ajoute au constructeur de la classe 'CartComponent' la propriété 'cartService' de type 'CartService'.
+3. On définit la propriété 'items' qui va permettre d'enregistrer dans le panier le produit sélectionné en appelant la méthode 'getItems()' dont la valeur retournée sera attribuée à la variable 'items'.
 
-3. Puis on définit la propriété 'items' qui va permettre d'enregistrer le produit sélectionner dans le panier via l'accesseur 'Items'par la méthode 'this.cartService.getItems()'.
-
-4. Dans le fichier 'cart.component.html' on va boucler sur les produits qui quand il correspondra au produit sélectionné affichera le nom de l'item via la syntaxe {{item.name}} ainsi que le prix du produit via la syntaxe {{item.price | currency}}.
+4. Dans le fichier 'cart.component.html', ajout d'une directive '*ngFor' qui va itérer sur la liste 'items' afin d'afficher via l'interpolation le nom et le prix de l'article.
 
 ### Récupérer les prix d'expédition
 #### Configurer AppModule pour utiliser HttpClient
 
-1. Importation de 'HttpClientModule' dans le fichier 'app.module.ts' et rajouter 'HttpClientModule' dans les imports de '@NgModule' pour pouvoir utiliser le service 'HttpClient'.
+1. Importation du module 'HttpClientModule' dans le fichier 'app.module.ts' qui va fournir les fonctionnalités liées à la gestion des requêtes HTTP dans les applications pour récupérer ou envoyer des données vers un serveur.
 
 #### Configurer CartService pour utiliser HttpClient
 
-1. Importation de 'HttpClient' dans le fichier 'cart.service.ts' afin de pouvoir récupérer des données et intéragir avec des API et des ressources externes puis ajouter au constructeur de la classe 'CartService' la propriété 'http' de type 'HttpClient'.
+1. Importation de la classe 'HttpClient' dans le fichier 'cart.service.ts' afin de pouvoir récupérer des données et intéragir avec des API et des ressources externes puis ajout au constructeur de la classe 'CartService' la propriété 'http' de type de la classe 'HttpClient'.
 
 #### Configurer CartService pour obtenir les prix d'expédition
 
-1. Après la configuration pour pouvoir utiliser 'HttpClient' et permettre la récupération des données, il faut pouvoir récupérer les données d'expédition à partir d'un fichier 'shipping.json'. On va définir une méthode 'getShippingPrices()' dans la classe 'CartService' du fichier 'cart.service.ts' qui utilisera la méthode 'get()' de 'HttpClient' :
-
-'return this.http.get<{type: String, price: number}[]>('/assets/shipping.json');'
+1. Après la configuration pour pouvoir utiliser 'HttpClient' et permettre la récupération des données, il faut pouvoir récupérer les données d'expédition à partir d'un fichier 'shipping.json'. On définit une méthode 'getShippingPrices()' dans la classe 'CartService' du fichier 'cart.service.ts' qui utilisera la méthode 'get()' vers le fichier JSON qui contient les prix d'expéditions.
 
 ### Créer un composant d'expédition
 
-1. Création d'un composant via le terminal 'shipping' qui va nous permettre d'afficher les données d'expédition.
+1. On va créer un nouveau composant via le terminal en tapant la commmande 'ng generate component shipping' qui va nous permettre d'afficher les données d'expédition.
 
 2. Dans le fichier 'app.module.ts' on ajoute le chemin pour l'expédition dans @NgModule -> RouteurModule.forRoot -> {path: "shipping", component:ShippingComponent},
 
@@ -147,25 +137,30 @@ On va voir maintenant comment ajouter un produit au panier.
 
 1. Afin de récupérer les données d'expédition depuis le fichier 'shipping.json' via le Http, on importe 'CartService' dans le fichier 'shipping.component.ts'.
 
-2. Dans la classe 'ShippingComponent', on crée le constructeur prenant en paramètre la propriété 'cartService' de type 'CarteService'.
+2. Dans la classe 'ShippingComponent', on crée le constructeur prenant en paramètre la propriété 'cartService' de type de la classe 'CarteService'.
 
-3. Puis on déclare la propriété 'shippingCosts', qui ne sera pas intialisée dans le constructeur, de type 'Observable' sous forme de tableau d'objets avec les propriétés 'type' de type String et 'price' de type number. Ensuite on crée une méthode 'ngOnInit' qui sera appelé quand le composant sera initialisé et permettra de récupérer les coûts d'expédition via la méthode 'getShippingPrices()' et assigner la valeur à 'ShippingCosts'.
+3. On définit la propriété 'shippingCosts', qui ne sera pas intialisée dans le constructeur, de type 'Observable' sous forme de tableau d'objets avec les propriétés 'type' de type String et 'price' de type number. Ensuite on crée une méthode 'ngOnInit' qui sera appelé quand le composant sera initialisé et permettra de récupérer les coûts d'expédition via la méthode 'getShippingPrices()' et assigner la valeur à 'ShippingCosts'.
 
-4. Dans le fichier 'shipping.component.html' on configure le modèle d'affichage des expéditions et leur prix avec une boucle pour les expéditions en mode async ce qui permet de renvoyer la dernière valeure de façon automatique jusqu'à ce le composant s'arrête.
+4. On met à jour le fichier 'shipping.component.html' en configurant le modèle d'affichage des expéditions et leur prix avec une directive'*ngFor' pour les expéditions en mode async ce qui permet de renvoyer la dernière valeure de façon automatique jusqu'à ce le composant s'arrête.
 
-5. Dans le fichier 'cart.component.html' on rajoute le chemin qui va afficher les prix d'expédition.
+5. Mise à jour du fichier 'cart.component.html' en rajoutant le chemin vers l'URL '/shipping' qui permettra d'afficher les prix d'expédition.
 
 ## Utilisation de formulaires pour la saisie utilisateur
 ### Définir le modèle de formulaire de paiement
 
-1. Dans le fichier 'cart.component.ts' on importe 'FormBuilder' pour faciliter la création d'abstractControl qui est la classe de base les formulaires de contrôle, de groupe et de tableau puis on l'initialise dans le constructeur.
+2. Importation dans le fichier 'cart.component.ts' de la classe 'FormBuilder' pour fournir des utilitaires pour la création et la gestion de formulaires dans l'application.
 
-2. On fait une méthode group() du FormBuilder pour récupérer des données.
+3. On initialise dans le constructeur de la class 'CartComponent' la propriété 'formBuilder' de type de la classe 'FormBuilder' puis on définit une méthode group() du FormBuilder pour récupérer des données.
 
 3. On appelle la méthode 'clearCart()' de 'cartService' pour effacer le contenu du panier et assigner les éléments du panier à la propriété 'items' puis afficher une fenêtre de confirmation et la valeur du formulaire dans la console du navigateur pour ensuite réinitialiser le formulaire pour une nouvelle entrée.
 
 ### Créer le formulaire de paiement
 
-1. Dans le fichier 'cart.component.html' on crée un élément HTML 'form' et y ajouter un attribut '[formGroup]' pour lier le formulaire à un objet 'FormGroup' via l'instance 'checkoutForm' puis on ajout un bouton pour soumettre le formulaire via la liaison d'évènement 'ngSubmit' qui appellera la méthode 'onSubmit()'.
+1. Dans le fichier 'cart.component.html' on crée un élément HTML 'form' dans lequel on assigne un attribut '[formGroup]' pour lier le formulaire à un objet 'FormGroup' via l'instance 'checkoutForm' puis on ajoute un bouton pour soumettre le formulaire via la liaison d'évènement 'ngSubmit' qui appellera la méthode 'onSubmit()'.
 
 2. On ajoute ensuite des balises 'input' afin de saisir les valeurs correspondants aux champs et les lier au 'checkoutForm'.
+
+### Et après
+
+![]()
+
