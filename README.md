@@ -167,6 +167,6 @@ Bah ....
 
 ### Difficultés rencontrées
 
-Pas de difficultés particulières quand on suit le pas à pas en mode appliquer bêtement mais quand il faut entrer dans le côté technique de la compréhension du code et du framework Angular, ce qui n'est pas évident, c'est d'avoir la logique de chaque composant, qu'elles vont être leur fonction dans l'application, qui doit hériter de qui, quel module, classe, décorateur importer dans quel composant, coder le fichier TS et mettre à jour le fichier HTML et savoir qu'il faut aussi mettre à jour ou pas le fichier app.module.ts. Il n'est pas évident de se repérer et de se retrouver dans se jeu d'imbrication même si Angular nous aide à mieux comprendre l'architecture du code.
+Pas de difficultés particulières quand on suit le pas à pas en mode appliquer bêtement mais quand il faut entrer dans le côté technique de la compréhension du code et du framework Angular, ce qui n'est pas évident, c'est d'avoir la logique de chaque composant, qu'elles vont être leur fonction dans l'application, qui doit hériter de qui, quel module, classe, décorateur importer dans quel composant, coder le fichier TS et mettre à jour le fichier HTML et savoir qu'il faut aussi mettre à jour ou pas le fichier app.module.ts. Il n'est pas évident de se repérer et de se retrouver dans se jeu d'imbrication même si Angular nous aide à mieux comprendre l'architecture du projet, simplifie le code et sa compréhension mais à cet instant la manipulation n'est absolument pas évidente et je ne serais pas en mesure de le refaire tout seul.
 
 
